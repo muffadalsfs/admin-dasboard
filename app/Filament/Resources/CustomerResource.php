@@ -69,3 +69,7 @@ class CustomerResource extends Resource
         ];
     }
 }
+
+
+$car ='this is a car';
+$car=student('one','two');

@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('city');
             $table->string('path');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->nullable();
             $table->timestamps();
+          
         });
     }
 

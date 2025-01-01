@@ -11,4 +11,7 @@ class Customer extends Model
         'city',
         'path',
     ];
+    function user(){
+        return $this->belongsTo(User::class);
+    }
 }
