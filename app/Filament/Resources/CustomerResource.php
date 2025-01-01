@@ -28,7 +28,7 @@ class CustomerResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')->required(),
                 Forms\Components\TextInput::make('city')->required(),
-                Forms\Components\FileUpload::make('path')->required(),
+                Forms\Components\FileUpload::make('path')->rules('image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048')->required(),
             ]);
     }
 
