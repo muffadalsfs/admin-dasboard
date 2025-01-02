@@ -11,22 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('city');
-            $table->string('path');
-            $table->unsignedBigInteger('user_id')->nullable(); // Allow user_id to be nullable
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Foreign key constraint
             $table->timestamps();
         });
     }
-    
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('countries');
     }
 };
