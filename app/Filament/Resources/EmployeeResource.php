@@ -12,6 +12,11 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Get;
+use App\Models\State;
+use Illuminate\Support\Collection;
+use App\Models\City;
+
 
 class EmployeeResource extends Resource
 {
@@ -27,14 +32,20 @@ class EmployeeResource extends Resource
                 ->relationship(name: 'country', titleAttribute:'name')
                 ->searchable()
                 ->preload()
+                ->live()
                     ->required(),
                     Forms\Components\Select::make('state_id')
-                    ->relationship(name: 'state', titleAttribute:'name')
+                    ->options(fn(Get $get): Collection=>State::query()
+                    ->where('country_id',$get('country_id'))
+                    ->pluck('name','id'))
                     ->searchable()
                     ->preload()
+                    ->live()
                         ->required(),
                         Forms\Components\Select::make('city_id')
-                        ->relationship(name: 'city', titleAttribute:'name')
+                        ->options(fn(Get $get): Collection=>City::query()
+                    ->where('state_id',$get('state_id'))
+                    ->pluck('name','id'))
                         ->searchable()
                         ->preload()
                             ->required(),

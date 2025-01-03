@@ -15,8 +15,8 @@ public function run()
 {
     DB::table('states')->delete();
     DB::table('states')->insert([
-        ['name' => 'State 1', 'country_id' => 1],
-        ['name' => 'State 2', 'country_id' => 1],
+        ['name' => 'Andhra Pradesh', 'country_id' => 1],
+        ['name' => 'Tasmania', 'country_id' => 1],
         // Add more states as needed
     ]);
 }

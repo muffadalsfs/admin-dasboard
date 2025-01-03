@@ -16,8 +16,8 @@ public function run()
 {
     DB::table('cities')->delete();
     DB::table('cities')->insert([
-        ['name' => 'City 1', 'state_id' => 1],
-        ['name' => 'City 2', 'state_id' => 1],
+        ['name' => 'Amaravati', 'state_id' => 1],
+        ['name' => 'Hobart', 'state_id' => 1],
         // Add more cities as needed
     ]);
 }
