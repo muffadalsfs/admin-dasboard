@@ -33,6 +33,10 @@ class EmployeeResource extends Resource
                 ->searchable()
                 ->preload()
                 ->live()
+                ->afterStateUpdated(function(\Filament\Forms\Set $set) { $set('state_id', null);
+                    $set('city_id', null);
+                })
+
                     ->required(),
                     Forms\Components\Select::make('state_id')
                     ->options(fn(Get $get): Collection=>State::query()
@@ -41,6 +45,7 @@ class EmployeeResource extends Resource
                     ->searchable()
                     ->preload()
                     ->live()
+                    ->afterStateUpdated(fn(\Filament\Forms\Set $set) => $set('city_id', null))
                         ->required(),
                         Forms\Components\Select::make('city_id')
                         ->options(fn(Get $get): Collection=>City::query()
@@ -48,6 +53,7 @@ class EmployeeResource extends Resource
                     ->pluck('name','id'))
                         ->searchable()
                         ->preload()
+                        ->live()
                             ->required(),
                             Forms\Components\Select::make('department_id')
                             ->relationship(name: 'department', titleAttribute:'name')
@@ -67,8 +73,12 @@ class EmployeeResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('date_of_birth')
+                ->native(false)
+                ->displayFormat('d/m/y')
                     ->required(),
-                Forms\Components\DatePicker::make('date_of_hier')
+                Forms\Components\DatePicker::make('date_of_hire')
+                ->native(false)
+                ->displayFormat('d/m/y')
                     ->required(),
             ]);
     }
@@ -77,29 +87,22 @@ class EmployeeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('country_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('state_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('city_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('department_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('country.name')
+                ->sortable()
+                ->searchable(),
                 Tables\Columns\TextColumn::make('first_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('last_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('middle_name')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('zip_code')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('date_of_birth')
                     ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('date_of_hire')
                     ->date()
                     ->sortable(),

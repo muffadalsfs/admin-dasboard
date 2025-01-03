@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
-    protected $fillable = ['name'];
+  protected $fillable = ['name'];
 
     // Example of a relationship (if you have one with employees)
     public function employees()

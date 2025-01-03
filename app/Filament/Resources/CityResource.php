@@ -25,7 +25,7 @@ class CityResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('state_id')
+                Forms\Components\Select::make('state.name')
                 ->relationship(name: 'state', titleAttribute:'name')
                 ->searchable()
                 ->preload()
@@ -40,8 +40,8 @@ class CityResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('state_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('state.name')
+                ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
