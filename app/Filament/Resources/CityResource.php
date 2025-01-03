@@ -12,7 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use Filament\Tables\Columns\ImageColumn;
 class CityResource extends Resource
 {
     protected static ?string $model = City::class;
@@ -25,9 +25,11 @@ class CityResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('state_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('state_id')
+                ->relationship(name: 'state', titleAttribute:'name')
+                ->searchable()
+                ->preload()
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),

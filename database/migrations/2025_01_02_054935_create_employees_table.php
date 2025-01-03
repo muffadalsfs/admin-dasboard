@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('middle_name');
             $table->char('zip_code');
             $table->date('date_of_birth');
-            $table->date('date_of_hier');
+            $table->date('date_of_hire')->default('2025-01-01');
             $table->timestamps();
         });
     }

@@ -23,6 +23,26 @@ class EmployeeResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('country_id')
+                ->relationship(name: 'country', titleAttribute:'name')
+                ->searchable()
+                ->preload()
+                    ->required(),
+                    Forms\Components\Select::make('state_id')
+                    ->relationship(name: 'state', titleAttribute:'name')
+                    ->searchable()
+                    ->preload()
+                        ->required(),
+                        Forms\Components\Select::make('city_id')
+                        ->relationship(name: 'city', titleAttribute:'name')
+                        ->searchable()
+                        ->preload()
+                            ->required(),
+                            Forms\Components\Select::make('department_id')
+                            ->relationship(name: 'department', titleAttribute:'name')
+                            ->searchable()
+                            ->preload()
+                                ->required(),
                 Forms\Components\TextInput::make('first_name')
                 ->required()
                 ->maxLength(255),
@@ -69,7 +89,7 @@ class EmployeeResource extends Resource
                 Tables\Columns\TextColumn::make('date_of_birth')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('date_of_hier')
+                Tables\Columns\TextColumn::make('date_of_hire')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
