@@ -17,7 +17,9 @@ use App\Models\State;
 use Illuminate\Support\Collection;
 use App\Models\City;
 
-
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Forms\Components\Section; 
 class EmployeeResource extends Resource
 {
     protected static ?string $model = Employee::class;
@@ -128,7 +130,7 @@ class EmployeeResource extends Resource
                 ]),
             ]);
     }
-
+ 
     public static function getRelations(): array
     {
         return [

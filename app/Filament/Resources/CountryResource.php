@@ -12,7 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Forms\Components\Section;
 class CountryResource extends Resource
 {
     protected static ?string $model = Country::class;
@@ -40,7 +42,8 @@ class CountryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                   ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -51,10 +54,12 @@ class CountryResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
          
             ])
+            
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -63,7 +68,14 @@ class CountryResource extends Resource
                 ]),
             ]);
     }
-
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+               
+                TextEntry::make('name')->label('Country Name'),
+            ]);
+    }
     public static function getRelations(): array
     {
         return [

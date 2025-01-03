@@ -12,7 +12,10 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Forms\Components\Section;
+use Illuminate\Database\Eloquent\Model;
 class DepartmentResource extends Resource
 {
     protected static ?string $model = Department::class;
@@ -64,7 +67,18 @@ class DepartmentResource extends Resource
                 ]),
             ]);
     }
-
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('name')->label('Department Name'),
+                TextEntry::make('employees_count')
+                    ->label('Number of Employees')
+                    ->state(function (Department $record): int {  
+                        return $record->employees()->count();  
+                    }),
+            ]);
+    }
     public static function getRelations(): array
     {
         return [
@@ -77,7 +91,7 @@ class DepartmentResource extends Resource
         return [
             'index' => Pages\ListDepartments::route('/'),
             'create' => Pages\CreateDepartment::route('/create'),
-            'view' => Pages\ViewDepartment::route('/{record}'),
+            // 'view' => Pages\ViewDepartment::route('/{record}'),
             'edit' => Pages\EditDepartment::route('/{record}/edit'),
         ];
     }

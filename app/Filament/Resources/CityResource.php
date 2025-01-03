@@ -13,6 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Forms\Components\Section;
 class CityResource extends Resource
 {
     protected static ?string $model = City::class;
@@ -67,7 +70,15 @@ class CityResource extends Resource
                 ]),
             ]);
     }
-
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+               
+                TextEntry::make('state.name')->label('State Name'),
+                TextEntry::make('name')->label('City Name'),
+            ]);
+    }
     public static function getRelations(): array
     {
         return [
@@ -80,7 +91,7 @@ class CityResource extends Resource
         return [
             'index' => Pages\ListCities::route('/'),
             'create' => Pages\CreateCity::route('/create'),
-            'view' => Pages\ViewCity::route('/{record}'),
+            // 'view' => Pages\ViewCity::route('/{record}'),
             'edit' => Pages\EditCity::route('/{record}/edit'),
         ];
     }

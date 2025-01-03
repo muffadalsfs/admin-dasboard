@@ -12,6 +12,10 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Forms\Components\Section;
+
 
 class StateResource extends Resource
 {
@@ -70,7 +74,15 @@ class StateResource extends Resource
                 ]),
             ]);
     }
-
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+               
+                TextEntry::make('country.name')->label('Country Name'),
+                TextEntry::make('name')->label('State Name'),
+            ]);
+    }
     public static function getRelations(): array
     {
         return [
