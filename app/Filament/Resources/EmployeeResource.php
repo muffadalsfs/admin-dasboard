@@ -16,10 +16,13 @@ use Filament\Forms\Get;
 use App\Models\State;
 use Illuminate\Support\Collection;
 use App\Models\City;
-
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Forms\Components\Section; 
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Filters\Filter;
+
 class EmployeeResource extends Resource
 {
     protected static ?string $model = Employee::class;
@@ -118,7 +121,28 @@ class EmployeeResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('Department')
+                ->relationship('department','name')
+                ->searchable()
+                ->preload()
+                ->label('filter by deparment')
+                ->indicator('Deparment'),
+                Filter::make('created_at')
+    ->form([
+        DatePicker::make('created_from'),
+        DatePicker::make('created_until'),
+    ])
+    ->query(function (Builder $query, array $data): Builder {
+        return $query
+            ->when(
+                $data['created_from'],
+                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+            )
+            ->when(
+                $data['created_until'],
+                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+            );
+    })
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
