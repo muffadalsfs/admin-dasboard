@@ -16,6 +16,6 @@ public function state()
 }
 public function employees()
 {
-    return $this ->HasMany(Employee::class);
-} 
+    return $this->hasMany(Employee::class);
+}
 }
