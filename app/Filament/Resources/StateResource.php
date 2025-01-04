@@ -15,8 +15,9 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Forms\Components\Section;
-
-
+use App\Models\City;
+use App\Filament\Resources\CountryResource\RelationManagers\CitiesRelationManager;
+use App\Filament\Resources\CountryResource\RelationManagers\EmployeesRelationManager;
 class StateResource extends Resource
 {
     protected static ?string $model = State::class;
@@ -86,7 +87,10 @@ class StateResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            
+                RelationManagers\CitiesRelationManager::class, // Correct spelling and namespace
+                RelationManagers\EmployeesRelationManager::class,
+            
         ];
     }
 
