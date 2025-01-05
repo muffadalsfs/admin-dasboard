@@ -25,6 +25,14 @@ class DepartmentResource extends Resource
     protected static ?string $modelLabel = ' Department';
     protected static ?string $navigationGroup = 'System Management';
     protected static ?int $navigationSort =4;
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }//count show method 
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary'; 
+    }
 
     public static function form(Form $form): Form
     {

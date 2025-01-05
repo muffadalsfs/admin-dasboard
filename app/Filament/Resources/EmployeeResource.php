@@ -22,12 +22,52 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Forms\Components\Section; 
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Model;
 
 class EmployeeResource extends Resource
 {
     protected static ?string $model = Employee::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Employee Management';
+    protected static ?string $recordTitleAttribute = 'first_name';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['country']); // Eager load the 'country' relationship
+    }
+
+    public static function getGlobalSearchTitle(Model $record): string
+    {
+        return $record->last_name ?? 'Unknown';
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['first_name', 'last_name', 'middle_name'];
+    }//search by this 
+
+    public static function getGlobalSearchResultDetail(Model $record): array
+    {
+        return [
+            'Country' => $record->country->name ?? 'N/A', 
+        ];
+    }
+    public static function getGlobalSearchEloquementQuery():Bulider
+    {
+        return parent::getGlobalSearchEloquementQuery()->with(['country']);
+    }
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }//count show method 
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary'; 
+    }
+    
+
+
 
     public static function form(Form $form): Form
     {
