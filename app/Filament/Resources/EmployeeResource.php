@@ -23,7 +23,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Model;
-
+use Filament\Notifications\Notification;
 class EmployeeResource extends Resource
 {
     protected static ?string $model = Employee::class;
@@ -118,11 +118,10 @@ class EmployeeResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('date_of_birth')
-                ->native(false)
-                ->displayFormat('d/m/y')
+                
                     ->required(),
                 Forms\Components\DatePicker::make('date_of_hire')
-                ->native(false)
+                ->native(true)
                 ->displayFormat('d/m/y')
                     ->required(),
             ]);
@@ -187,6 +186,8 @@ class EmployeeResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                ->successNotificationTitle('Employe delete')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
